@@ -59,7 +59,7 @@ export default function Addnote(){
                             <label htmlFor="exampleInputPassword1">Password</label>
                             <input type="text" className="form-control" name="tag" onChange={onTagChange} id="exampleInputPassword1" placeholder="Tag" />
                         </div>
-                        <button type="submit" onClick={fireOnSubmit} className="btn btn-primary">Submit</button>
+                        <button type="submit" onClick={fireOnSubmit} className="btn btn-primary">Add note</button>
                     </form>
                 </div>
             </div>
