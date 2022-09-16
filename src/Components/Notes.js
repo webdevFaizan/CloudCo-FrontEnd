@@ -5,9 +5,9 @@ export default function Notes(props) {
     
   return (
     <>
-        <div style={{display : 'flex', flexWrap : "wrap"}}>
+        <div style={{display : 'flex', flexWrap : "wrap", justifyContent : 'space-around', border : "0px solid red"}}>
             {                
-                props.notes.length>0?props.notes.map((note)=>{return <NotesItem key={note.title} note={note}/>}):""
+                props.notes.map((note)=>{return <NotesItem key={note._id} note={note}/>})
             }
         </div>
     </>

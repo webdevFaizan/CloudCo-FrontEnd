@@ -9,10 +9,6 @@ const Home = () => {
 
   const context = useContext(NoteContext);
   const {notes, updateNotesList} = context;
-  // console.log('NotesList');
-  // console.log(notes);
-  // notesList.map((note))
-  // notes.map((note)=>console.log(note.title))
   return (
     <>
       <div>
@@ -36,12 +32,20 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className="notes container">
-        <h1>Your Saved Notes</h1>
-        <button className='btn btn-danger' onClick={updateNotesList}>Clear Notes</button>
-        <Notes notes={notes}/>
-        
-      </div>
+      {
+        notes.length && (
+          <div className="notes container">
+            <h1>Your Saved Notes <button className='btn btn-danger' onClick={updateNotesList}>Clear Notes</button></h1>            
+            {
+              notes.length && <Notes notes={notes}/>
+            }
+            
+          </div>
+        )
+      }
+      {
+        !notes.length && <strong>Please add some new notes.</strong>
+      }
     </>
   )
 }
