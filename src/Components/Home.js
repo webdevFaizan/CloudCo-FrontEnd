@@ -8,7 +8,7 @@ import NoteContext from '../Context/Note/NoteContext';
 const Home = () => {
 
   const context = useContext(NoteContext);
-  const {notes} = context;
+  const {notes, updateNotesList} = context;
   // console.log('NotesList');
   // console.log(notes);
   // notesList.map((note))
@@ -36,8 +36,11 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className="notes container">        
+      <div className="notes container">
+        <h1>Your Saved Notes</h1>
+        <button className='btn btn-danger' onClick={updateNotesList}>Clear Notes</button>
         <Notes notes={notes}/>
+        
       </div>
     </>
   )
