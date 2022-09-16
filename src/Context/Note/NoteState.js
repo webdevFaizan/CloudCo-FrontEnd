@@ -49,13 +49,17 @@ const NoteState = (props) =>{
         }
       ];
     const [notes, setNotes] = useState(initialNotes);
-    function updateNotesList(){
+    function clearNotesList(){
         setNotes({});
+    }
+
+    const addNote=(obj)=>{
+        setNotes(notes.concat(obj));    //Concat updates an array, where as push updates an array. Here we can only concat the new notes, if we try to push the new notes, then this will not work fine. As the concat function takes the old notes and adds the new notes and then updates the whole state variable, but push does not do this.
     }
 
     return (
         // <NoteContext.Provider value={{state : state, updateState: updateState}}>{/* We can even use the ES6 command here basically passing only {state, updateState} */}
-        <NoteContext.Provider value={{notes, updateNotesList}}>
+        <NoteContext.Provider value={{notes, clearNotesList, addNote}}>
             {props.children}
         </NoteContext.Provider>
     )

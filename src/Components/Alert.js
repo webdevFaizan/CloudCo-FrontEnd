@@ -5,7 +5,7 @@ function Alert(props) {
     <>
         {
             props.message.length>0?(
-                <div class="alert alert-primary container " style ={{position: 'absolute'}}role="alert">
+                <div className="alert alert-primary container " style ={{position: 'absolute'}}role="alert">
                         {props.message}
                 </div>
                 ): ''
