@@ -28,8 +28,18 @@ const NoteState = (props) =>{
     }
 
 
-    const deleteNote=(id)=>{
+    const deleteNote=async(id)=>{
       // console.log(id);
+      let url = `${host}/api/notes/deletenote/${id}`;      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+        }
+      });
+      let jsonResponse = await response.json();
+      console.log(jsonResponse);
       const newNotes = notes.filter((note)=>{return note._id!==id});    //The filter function will check for the condition and if the condition matches then it will be added to the newNotes array, this will be useful just like map method where we could get the actual array returned
       setNotes(newNotes);
     }
