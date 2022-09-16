@@ -32,7 +32,10 @@ export default function Addnote(){
         obj.title=title;
         obj.description=description;
         obj.tag=tag;
-        console.log(obj);
+        // console.log(obj);
+        document.getElementById('formTitle').value="";
+        document.getElementById('formDescription').value="";
+        document.getElementById('formTag').value="";
         addNote(obj);       //This is the global context api variable and it will be called using this parameter.
     }
 
@@ -47,17 +50,17 @@ export default function Addnote(){
                     <h1>Add a note</h1>
                     <form>
                         <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Title</label>
-                            <input type="text" className="form-control" name="title" id="exampleInputEmail1" onChange={onTitleChange} aria-describedby="emailHelp" placeholder="Enter Title" />
+                            <label htmlFor="formTitle">Title</label>
+                            <input type="text" className="form-control" name="title" id="formTitle" onChange={onTitleChange} aria-describedby="emailHelp" placeholder="Enter Title" />
                             {/* onChange is the method that can be used to track the change in this field, it always sends in an event object, this event object is being received in the method and we use it to track the changes. This is exactly how we are able to create a state variable out of 'title' which on change will keep on updating the states. */}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="exampleInputPassword1">Password</label>
-                            <input type="text" className="form-control" name="description" onChange={onDescriptionChange} id="exampleInputPassword1" placeholder="Post..." />
+                            <label htmlFor="formDescription">Description</label>
+                            <input type="text" className="form-control" name="description" onChange={onDescriptionChange} id="formDescription" placeholder="Post..." />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="exampleInputPassword1">Password</label>
-                            <input type="text" className="form-control" name="tag" onChange={onTagChange} id="exampleInputPassword1" placeholder="Tag" />
+                            <label htmlFor="formTag">Tag</label>
+                            <input type="text" className="form-control" name="tag" onChange={onTagChange} id="formTag" placeholder="Tag" />
                         </div>
                         <button type="submit" onClick={fireOnSubmit} className="btn btn-primary">Add note</button>
                     </form>

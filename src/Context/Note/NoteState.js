@@ -1,60 +1,30 @@
 import { useState } from "react";
 import NoteContext from "./NoteContext";
 // import { useState } from "react";
-const NoteState = (props) =>{    
-    const initialNotes = [
-        {
-          "_id": "6323a3cc615159d7f9264757",
-          "user": "63237c087a7c6b4dcf4c5883",
-          "title": "Updated Lore and Legends",
-          "description": "Updated This book is the prequel of the 2018 god of war gameplay, read it to understand the lore and legends of midgard and upcoming game of 2022 god of war ragnarok",
-          "tag": "Updated Novel",
-          "date": "2022-09-15T22:14:36.712Z",
-          "createdAt": "2022-09-15T22:14:36.724Z",
-          "updatedAt": "2022-09-15T23:14:07.434Z",
-          "__v": 0
-        },
-        {
-          "_id": "6323a8ad10de2984b92538ce",
-          "user": "63237c087a7c6b4dcf4c5883",
-          "title": "Double Updated Lore and Legends",
-          "description": "Double Updated This book is the prequel of the 2018 god of war gameplay, read it to understand the lore and legends of midgard and upcoming game of 2022 god of war ragnarok",
-          "tag": "Double Updated Novel",
-          "date": "2022-09-15T22:35:25.337Z",
-          "createdAt": "2022-09-15T22:35:25.349Z",
-          "updatedAt": "2022-09-15T23:38:00.236Z",
-          "__v": 0
-        },
-        {
-          "_id": "6323a3cc615159d7f92646757",
-          "user": "63237c087a7c6b4dcf4c5883",
-          "title": "Updated Lore and Legends",
-          "description": "Updated This book is the prequel of the 2018 god of war gameplay, read it to understand the lore and legends of midgard and upcoming game of 2022 god of war ragnarok",
-          "tag": "Updated Novel",
-          "date": "2022-09-15T22:14:36.712Z",
-          "createdAt": "2022-09-15T22:14:36.724Z",
-          "updatedAt": "2022-09-15T23:14:07.434Z",
-          "__v": 0
-        },
-        {
-          "_id": "6323a8ad10de2984b492538ce",
-          "user": "63237c087a7c6b4dcf4c5883",
-          "title": "Double Updated Lore and Legends",
-          "description": "Double Updated This book is the prequel of the 2018 god of war gameplay, read it to understand the lore and legends of midgard and upcoming game of 2022 god of war ragnarok",
-          "tag": "Double Updated Novel",
-          "date": "2022-09-15T22:35:25.337Z",
-          "createdAt": "2022-09-15T22:35:25.349Z",
-          "updatedAt": "2022-09-15T23:38:00.236Z",
-          "__v": 0
-        }
-      ];
+const NoteState = (props) =>{  
+
+    const host = 'http://localhost:5000';
+    const initialNotes = [];
+
     const [notes, setNotes] = useState(initialNotes);
     function clearNotesList(){
         setNotes({});
     }
 
-    const addNote=(obj)=>{
-        setNotes(notes.concat(obj));    //Concat updates an array, where as push updates an array. Here we can only concat the new notes, if we try to push the new notes, then this will not work fine. As the concat function takes the old notes and adds the new notes and then updates the whole state variable, but push does not do this.
+    const addNote=async (obj)=>{
+      console.log(obj);
+
+      let url = `${host}/api/notes/addnote`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+        },
+        body: JSON.stringify(obj)
+      });
+      const jsonResponse = await response.json();
+      setNotes(notes.concat(jsonResponse));    //Concat updates an array, where as push updates an array. Here we can only concat the new notes, if we try to push the new notes, then this will not work fine. As the concat function takes the old notes and adds the new notes and then updates the whole state variable, but push does not do this.
     }
 
 
@@ -64,9 +34,23 @@ const NoteState = (props) =>{
       setNotes(newNotes);
     }
 
+    const fetchNotes=async ()=>{
+      let url = `${host}/api/notes/fetchnotes`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+        }
+      });
+      let jsonResponse = await response.json();
+      // console.log(jsonResponse);
+      setNotes(jsonResponse);
+    }
+
     return (
         // <NoteContext.Provider value={{state : state, updateState: updateState}}>{/* We can even use the ES6 command here basically passing only {state, updateState} */}
-        <NoteContext.Provider value={{notes, clearNotesList, addNote, deleteNote}}>
+        <NoteContext.Provider value={{notes, clearNotesList, addNote, deleteNote, fetchNotes}}>
             {props.children}
         </NoteContext.Provider>
     )

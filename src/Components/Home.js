@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext, useEffect} from 'react'
 import Notes from './Notes';
 import Addnote from './Addnote';
 import NoteContext from '../Context/Note/NoteContext';
@@ -9,8 +9,13 @@ import NoteContext from '../Context/Note/NoteContext';
 
 const Home = () => {
 
+  
   const context = useContext(NoteContext);
-    const {notes, clearNotesList} = context;
+  const {notes, clearNotesList, fetchNotes} = context;
+  useEffect(()=>{
+    fetchNotes();
+    // eslint-disable-next-line
+  },[]);
   return (
     <>
       <Addnote/>
