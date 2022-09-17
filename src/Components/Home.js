@@ -5,8 +5,6 @@ import NoteContext from '../Context/Note/NoteContext';
 
 
 
-
-
 const Home = () => {
   const context = useContext(NoteContext);
   const { notes, flag, clearNotesList, editNote, fetchNotes } = context;
@@ -17,7 +15,7 @@ const Home = () => {
   }, []);
 
   
-  // *****************For Modal************
+  // *****************For Modal****************
   const [title,setTitle] = useState('');      //These are the local state variables and it will be used to track the modal variables. The add note component has its own local variable that is being used to set the local variable value.
   const [description,setDescription] = useState('');
   const [tag,setTag] = useState('');
@@ -127,5 +125,4 @@ const Home = () => {
     </>
   )
 }
-
 export default Home

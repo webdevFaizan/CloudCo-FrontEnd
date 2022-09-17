@@ -11,15 +11,17 @@ import Login from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Signup from "./Components/Signup";
 import NoteState from "./Context/Note/NoteState";
+import AlertState from "./Context/Alert/AlertState";
 
 const App = () => {
   return (
     <>
       <NoteState>
+        <AlertState>
           <Router>
             <Navbar/>
             <div className="alert container" style={{minHeight : '70px', position: 'relative'}}>
-              <Alert message={"No message for now"}/>
+            <Alert />
             </div>
             <div className="container">
               <Routes>
@@ -30,6 +32,7 @@ const App = () => {
               </Routes>
             </div>
           </Router>
+        </AlertState>          
       </NoteState>
     </>
   )
