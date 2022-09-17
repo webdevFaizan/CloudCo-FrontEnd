@@ -20,7 +20,7 @@ const Home = () => {
         method : 'POST',
         headers: {
         'Content-Type': 'application/json',
-        'authToken' : localStorage.getItem('authToken')
+        'authToken' : localStorage.getItem('authToken')   //We are sending in the authentication token to take the user detail. The only problem with this authentication token storage is that anyone with access to local storage can misuse the authentication token, this is why passport js authentication is required. Or we could not store this authentication token in local storage but we could store this token in cookie. And I have to read more about jynx/codeial how this authentication works. That is one of the most important part.
        }
       });
       const jsonVersion = await temp.json();
@@ -34,7 +34,7 @@ const Home = () => {
     if(localStorage.getItem('authToken')!==null)
     { 
       fetchNotes();
-      setName();         
+      setName();         //This setName has to be an asynchronous method, since we are fetching the details of the user, I want to display the name of the user which is itself a state variable, I could not add the async keyword in front of the method in the useEffect() method, but this way I could do it.
     }
     else{
       navigate('/login');

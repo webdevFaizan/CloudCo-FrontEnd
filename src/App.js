@@ -10,7 +10,7 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Navbar from "./Components/Navbar";
 import Signup from "./Components/Signup";
-import Logout from "./Components/Logout";
+// import Logout from "./Components/Logout";
 import NoteState from "./Context/Note/NoteState";
 import AlertState from "./Context/Alert/AlertState";
 
@@ -37,6 +37,7 @@ const App = () => {
                 <Route exact path='/login' element={<Login tokenChange={tokenChange}/>}/>
                 <Route exact path='/signup' element={<Signup tokenChange={tokenChange}/>}/>
                 {/* <Route exact path='/logout' element={<Logout tokenChange={tokenChange}/>}/> */}
+                {/* The route has been deleted, since we had no use of mounting the logout route, we just wanted the authentication token to be deleted, that could be done with a fucntion call on click of the logout link in the navbar, and the status of deletion of authToken will be sent back to the parent, which will let us decide which buttons out of login signup logout should be displayed. */}
               </Routes>
             </div>
           </Router>

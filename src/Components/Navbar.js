@@ -14,7 +14,7 @@ const Navbar = (props) => {
   },[location]);
   const logoutFunction=()=>{
     localStorage.removeItem('authToken');
-    props.tokenChange(null)
+    props.tokenChange(null)   //This is telling back the parent element that the authToken has been deleted, this will be used to display the correct buttons among logout, login, signup.
     alertChange({
       message : "Logged Out Successfully",
       type : "success",

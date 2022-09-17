@@ -76,6 +76,8 @@ const NoteState = (props) =>{
 
 
     const editNote=async(id,obj)=>{
+      console.log(id);
+      console.log(obj);
       let url = `${host}/api/notes/updatenote/${id}`;      
       await fetch(url, {
         method: 'PUT',
