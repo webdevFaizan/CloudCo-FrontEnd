@@ -14,7 +14,7 @@ const NoteState = (props) =>{
           setFlag(true)
         }
         else if(flag===true){          
-          // setNotes(notes);
+         // setNotes(notes);
           setFlag(false);
         }
     }

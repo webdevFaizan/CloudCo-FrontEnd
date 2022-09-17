@@ -25,6 +25,22 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        <div className="credentials d-flex">
+            <div className="collapse navbar-collapse " >
+              <ul className="navbar-nav mr-auto">
+                <li className={`nav-item`}>
+                  <button className="btn btn-sm btn-primary mx-1" style={{color:'#000'}}>
+                    <Link className="nav-link active" to="/login">Login <span className="sr-only">(current)</span></Link>
+                  </button>
+                </li>
+                <li className={`nav-item`}>              
+                  <button className="btn btn-sm btn-primary mx-1">
+                      <Link className="nav-link active" to="/signup">Signup <span className="sr-only">(current)</span></Link>                
+                  </button>
+                </li>
+              </ul>
+            </div>
+        </div>
       </nav>
     </div>
   )
