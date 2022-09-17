@@ -10,16 +10,31 @@ const Home = () => {
   const context = useContext(NoteContext);
   const alertContext = useContext(AlertContext);
   const navigate = useNavigate();
-  // const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('');
   const {alertChange }= alertContext;
   const { notes, flag, clearNotesList, editNote, fetchNotes } = context;
   const ref = useRef(null);
-  useEffect(() => {
+
+  const setName=async()=>{
+    const temp = await fetch('http://localhost:5000/api/auth/getuser',{
+        method : 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'authToken' : localStorage.getItem('authToken')
+       }
+      });
+      const jsonVersion = await temp.json();
+      // console.log(jsonVersion);
+      setUserName(jsonVersion.name);
+  }
+
+  useEffect(() => {       //useEffect should contain a method that need to be syncrhornous;
     // console.log("The auth token is -")
     // console.log(localStorage.getItem('authToken'));
     if(localStorage.getItem('authToken')!==null)
     { 
-      fetchNotes();            
+      fetchNotes();
+      setName();         
     }
     else{
       navigate('/login');
@@ -87,7 +102,7 @@ const Home = () => {
 
   return (
     <>
-      <Addnote />
+      <Addnote name={userName}/>
       {/* <!-- Button trigger modal --> */}
       {/* This button has been hidden, its functionality is required, but it should not be shown since, we are using this as ref object, when ever we click on any update icon in each note, then the updateOnClick method is being run and thus it will be able to track if this button is being clicked or not. */}
       <button style={{display : 'none'}}ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
