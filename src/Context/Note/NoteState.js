@@ -1,14 +1,16 @@
 import { useState } from "react";
 import NoteContext from "./NoteContext";
-// import { useState } from "react";
-const NoteState = (props) =>{  
 
+// import { useState } from "react";
+const NoteState = (props) =>{
+
+  
     const host = 'http://localhost:5000';
     const initialNotes = [];
 
     const [notes, setNotes] = useState(initialNotes);
-    const [flag, setFlag] =useState(true)
-    function clearNotesList(){
+    const [flag, setFlag] =useState(true)   //This flag is used to show or hide the notes, not required but this is just an extra functionality.
+    function clearNotesList(){  //This is not actually clearing the notes from the db, only hiding from the front end that too will be reverted with a toggle switch.
         if(flag===false){          
           // setNotes(notes);
           setFlag(true)
@@ -27,31 +29,30 @@ const NoteState = (props) =>{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+          'authToken' : localStorage.getItem('authToken')
         },
         body: JSON.stringify(obj)
       });
+      // fetchNotes();
       const jsonResponse = await response.json();
-      setNotes(notes.concat(jsonResponse));    //Concat updates an array, where as push updates an array. Here we can only concat the new notes, if we try to push the new notes, then this will not work fine. As the concat function takes the old notes and adds the new notes and then updates the whole state variable, but push does not do this.
+      setNotes(jsonResponse);    //Concat updates an array, where as push updates an array. Here we can only concat the new notes, if we try to push the new notes, then this will not work fine. As the concat function takes the old notes and adds the new notes and then updates the whole state variable, but push does not do this.
     }
 
 
     const deleteNote=async(id)=>{
       // console.log(id);
       // Here if we write, only confirm(message) this is not going to work, so we have to add the window.confirm.
-      if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
-        return;
-      }
+      
       let url = `${host}/api/notes/deletenote/${id}`;      
-      const response = await fetch(url, {
+      await fetch(url, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+          'authToken' : localStorage.getItem('authToken')
         }
       });
-      let jsonResponse = await response.json();
-      console.log(jsonResponse);
+      // let jsonResponse = await response.json();
+      // console.log(jsonResponse);
       const newNotes = notes.filter((note)=>{return note._id!==id});    //The filter function will check for the condition and if the condition matches then it will be added to the newNotes array, this will be useful just like map method where we could get the actual array returned
       setNotes(newNotes);
     }
@@ -63,12 +64,13 @@ const NoteState = (props) =>{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+          'authToken' : localStorage.getItem('authToken')
         }
       });
       let jsonResponse = await response.json();
       // console.log(jsonResponse);
       setNotes(jsonResponse);
+      
     }
 
 
@@ -79,7 +81,7 @@ const NoteState = (props) =>{
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+          'authToken' : localStorage.getItem('authToken')
         },
         body: JSON.stringify(obj) //This body is to be sent, this is why this field had to be included, this is the payload, in the fetchNotes method there is no payload to be added, this is why in that function we do not need to add payoload.
       });

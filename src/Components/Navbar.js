@@ -1,14 +1,26 @@
-import React, {useEffect} from 'react'
+import React, {useEffect,useContext} from 'react'
 
 import {Link,useLocation} from 'react-router-dom'
+import AlertContext from "../Context/Alert/AlertContext"
 
 
 const Navbar = (props) => {
+  const context=useContext(AlertContext);
+  const {alertChange} =context;
   
   const location = useLocation();
   useEffect(()=>{
     // console.log(location.pathname);
-  },[location])
+  },[location]);
+  const logoutFunction=()=>{
+    localStorage.removeItem('authToken');
+    props.tokenChange(null)
+    alertChange({
+      message : "Logged Out Successfully",
+      type : "success",
+      id : ''
+    });
+  }
   return (
     <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -50,7 +62,7 @@ const Navbar = (props) => {
                   props.token?(
                       <li className={`nav-item`}>              
                         <button className="btn btn-sm btn-primary mx-1">
-                            <Link className="nav-link active" to="/logout">Logout <span className="sr-only">(current)</span></Link>                
+                            <Link className="nav-link active" to="/login" onClick={logoutFunction}>Logout <span className="sr-only">(current)</span></Link>                
                         </button>
                       </li>):''
                 }

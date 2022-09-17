@@ -11,7 +11,7 @@ function AlertState(props) {
     });
 
   const alertChange=(obj)=>{    
-    console.log(obj);
+    // console.log(obj);
     setAlert(obj);
     setTimeout(()=>{
         setAlert({

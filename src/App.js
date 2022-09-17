@@ -17,16 +17,16 @@ import AlertState from "./Context/Alert/AlertState";
 
 
 const App = () => {  
-  const [token, setToken] = useState(localStorage.getItem('auth_token'));
-  const tokenChange =(auth_token)=>{
-    setToken(auth_token);
+  const [token, setToken] = useState(localStorage.getItem('authToken'));
+  const tokenChange =(authToken)=>{
+    setToken(authToken);
   }
   return (
     <>
       <NoteState>
         <AlertState>
           <Router>
-            <Navbar token={token} />
+            <Navbar token={token} tokenChange={tokenChange}/>
             <div className="alert container" style={{minHeight : '70px', position: 'relative'}}>
             <Alert />
             </div>
@@ -36,7 +36,7 @@ const App = () => {
                 <Route exact path='/about' element={<About/>}/>                             
                 <Route exact path='/login' element={<Login tokenChange={tokenChange}/>}/>
                 <Route exact path='/signup' element={<Signup tokenChange={tokenChange}/>}/>
-                <Route exact path='/logout' element={<Logout tokenChange={tokenChange}/>}/>
+                {/* <Route exact path='/logout' element={<Logout tokenChange={tokenChange}/>}/> */}
               </Routes>
             </div>
           </Router>

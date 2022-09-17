@@ -23,7 +23,7 @@ function Login(props) {
         // console.log(description);
     }
 
-    const onSubmit=async (e)=>{        
+const onSubmit=async (e)=>{        
         e.preventDefault();
         
         let obj={
@@ -41,11 +41,9 @@ function Login(props) {
 
         const data =await response.json();
         if(data.success===true){
-            // localStorage.auth_token = data.auth_token;
-            localStorage.setItem('auth_token', data.auth_token)
-            console.log("auth token in local storage is");
-            console.log(localStorage.getItem('auth_token'));
-            props.tokenChange(localStorage.getItem('auth_token'));
+            // localStorage.authToken = data.authToken;
+            localStorage.setItem('authToken', data.authToken)
+            props.tokenChange(localStorage.getItem('authToken'));
             navigate('/');      //This navigate functionality is taken from useNavigate, it will take your react based application to different pages, this is useful in the case of login is complete, or if the login has failed, or if the user is trying to signin but the email id does not exist and he needs to sign up.
             alertChange({
                 message : "Logged In",

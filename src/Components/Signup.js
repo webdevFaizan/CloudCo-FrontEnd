@@ -37,7 +37,7 @@ function Signup(props){
     const handleOnSubmit = async(e)=>{
         e.preventDefault();
         if(confirmpassword!==password){
-            console.log("Incorrrect Password");
+            // console.log("Incorrrect Password");
             window.alert("Password did not match")
             return;
         }        
@@ -46,7 +46,7 @@ function Signup(props){
             email:email,
             password: password
         }
-        console.log(obj);
+        // console.log(obj);
         let url = `${host}/api/auth/createuser`;
         const response = await fetch(url, {
             method: 'POST',
@@ -57,12 +57,12 @@ function Signup(props){
         });
 
         const data =await response.json();
-        console.log(data);
+        // console.log(data);
         if(data.success===true){            
-            localStorage.setItem('auth_token', data.auth_token)
-            console.log("auth token in local storage is");
-            console.log(localStorage.getItem('auth_token'));
-            props.tokenChange(localStorage.getItem('auth_token'));
+            localStorage.setItem('authToken', data.authToken)
+            // console.log("auth token in local storage is");
+            // console.log(localStorage.getItem('authToken'));
+            props.tokenChange(localStorage.getItem('authToken'));
             navigate('/'); 
             alertChange({
                 message : "Sign Up Successful, Logged In",

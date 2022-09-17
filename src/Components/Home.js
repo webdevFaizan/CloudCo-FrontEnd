@@ -3,17 +3,33 @@ import Notes from './Notes';
 import Addnote from './Addnote';
 import NoteContext from '../Context/Note/NoteContext';
 import AlertContext from '../Context/Alert/AlertContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
   const context = useContext(NoteContext);
   const alertContext = useContext(AlertContext);
+  const navigate = useNavigate();
+  // const [userName, setUserName] = useState('');
   const {alertChange }= alertContext;
   const { notes, flag, clearNotesList, editNote, fetchNotes } = context;
   const ref = useRef(null);
   useEffect(() => {
-    fetchNotes();
-    localStorage.removeItem('auth_token');
+    // console.log("The auth token is -")
+    // console.log(localStorage.getItem('authToken'));
+    if(localStorage.getItem('authToken')!==null)
+    { 
+      fetchNotes();            
+    }
+    else{
+      navigate('/login');
+      alertChange({
+        message : "Please Login First",
+        type : "danger",
+        id : ''
+      });
+    }
+    // localStorage.removeItem('authToken');
     // eslint-disable-next-line
   }, []);
 

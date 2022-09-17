@@ -9,13 +9,17 @@ export default function NotesItem(props) {
 
     const alertContext = useContext(AlertContext);
     const {alertChange }= alertContext;
+    
 
-    let {title,description} = props.note;
+    let {title,description,user} = props.note;
     let {updateOnClick}=props;
 
     const deleteFunction = ()=>{
         let id=props.note._id;
-        console.log(props.note._id);
+        // console.log(props.note._id);
+        if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
+            return;
+          }
         deleteNote(id);
         alertChange({
             message : "Note Deleted successfully.",
@@ -28,8 +32,9 @@ export default function NotesItem(props) {
     <>
         <div className="card mx-3 my-3" style={{width: "300px"}}>
             <div className="card-body">
-                <h5 className="card-title">{title}</h5>
+                <h4 className="card-title">{title}</h4>
                 <p className="card-text">{description}</p>
+                <strong className="card-text">Author - {user.name}</strong>
             </div>
             <div className="delete-icon my-3" style = {{alignItems: 'right', cursor: 'pointer'}} >
                 <div>

@@ -2,7 +2,8 @@ import React,{useState, useContext} from 'react'
 import NoteContext from "../Context/Note/NoteContext";      //This is only imported when we have to update a global state, which in this case is the notes array, it is being updated using context api, why is it global so that the state change in notes array could affect different components, while avoiding the props drilling.
 import AlertContext from '../Context/Alert/AlertContext';
 
-export default function Addnote(){
+
+export default function Addnote(props){
     const context = useContext(NoteContext);      //This is the useContext hook to handle the global objects.
     const {addNote} = context;      //These are the state function and variables which will be changed.
     const alertContext = useContext(AlertContext);
@@ -55,7 +56,10 @@ export default function Addnote(){
         <>
             <div>
                 <div className="container my-3">
-                    <h1>Add a note</h1>
+                    {
+                        <h1>Welcome back, {props.name}</h1>
+                    }
+                    <h3>Add a note</h3>
                     <form>
                         <div className="form-group">
                             <label htmlFor="formTitle">Title</label>
