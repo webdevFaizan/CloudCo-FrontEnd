@@ -18,40 +18,36 @@ const Home = () => {
 
   
   // *****************For Modal************
-  const [title,setTitle] = useState('');  
-    const [description,setDescription] = useState('');
-    const [tag,setTag] = useState('');
-    const [id,setId] = useState('');
+  const [title,setTitle] = useState('');      //These are the local state variables and it will be used to track the modal variables. The add note component has its own local variable that is being used to set the local variable value.
+  const [description,setDescription] = useState('');
+  const [tag,setTag] = useState('');
+  const [id,setId] = useState('');  //I had to set the id, or else I was not able to select which id was being clicked.
 
-    const onTitleChange=(e)=>{
-        setTitle(e.target.value);     
-        // console.log(e.target.value);
-    }
-
-    const onDescriptionChange=(e)=>{
-        setDescription(e.target.value);
-        // console.log(description);
-    }
-
-    const onTagChange=(e)=>{
-        setTag(e.target.value);
-        // onsole.log(tag);
-    }
-
-
-    const fireOnSubmit=(e)=>{
-      // console.log(id);
-      e.preventDefault();     //This will prevent the event to be query also it will stop the button to submit. 
-      let obj={};
-      obj.title=title;
-      obj.description=description;
-      obj.tag=tag;
-      // console.log(obj);
-      document.getElementById('edit-formTitle').value="";
-      document.getElementById('edit-formDescription').value="";
-      document.getElementById('edit-formTag').value="";
-      document.getElementById('closeButton').click();
-      editNote(id,obj);       //This is the global context api variable and it will be called using this parameter.
+  const onTitleChange=(e)=>{
+      setTitle(e.target.value);     
+      // console.log(e.target.value);
+  }
+  const onDescriptionChange=(e)=>{
+      setDescription(e.target.value);
+      // console.log(description);
+  }    
+  const onTagChange=(e)=>{
+      setTag(e.target.value);
+      // onsole.log(tag);
+  }
+  const fireOnSubmit=(e)=>{
+    // console.log(id);
+    e.preventDefault();     //This will prevent the event to be query also it will stop the button to submit. 
+    let obj={};
+    obj.title=title;
+    obj.description=description;
+    obj.tag=tag;
+    // console.log(obj);
+    document.getElementById('edit-formTitle').value="";   //These lines are not required. As this value is automatically updated when we click on a different note.
+    document.getElementById('edit-formDescription').value="";
+    document.getElementById('edit-formTag').value="";
+    document.getElementById('closeButton').click();
+    editNote(id,obj);       //This is the global context api variable and it will be called using this parameter. This is also where the global id state is being used up.
   }
     // ******************************
 
@@ -60,17 +56,18 @@ const Home = () => {
     const updateOnClick = (note) => {
       // console.log("inside ref with note id as -");
       // console.log(note);
-      document.getElementById('edit-formTitle').value=note.title;
+      document.getElementById('edit-formTitle').value=note.title;   //As soon as we click on the edit icon of each note, we will be clicking on the updateOnClick method, then we will set the values inside this hidden form with the value from notes, then we will allow the user to edit the already present data in the form.
       document.getElementById('edit-formDescription').value=note.description;
       document.getElementById('edit-formTag').value=note.tag;
-      setId(note._id);
-      ref.current.click();
+      setId(note._id);    //This is actually being used to track the id of the form, on which we have clicked, if we had not made the id as a state variable, then we have lost which id was being called and which note is being edited.
+      ref.current.click();    //This is the main function that is using the reference of the click button, without this the useRef hook cannot track various the changes in the hook. And thus it will not be able to track the change in when you click on the modal.
     }
 
   return (
     <>
       <Addnote />
       {/* <!-- Button trigger modal --> */}
+      {/* This button has been hidden, its functionality is required, but it should not be shown since, we are using this as ref object, when ever we click on any update icon in each note, then the updateOnClick method is being run and thus it will be able to track if this button is being clicked or not. */}
       <button style={{display : 'none'}}ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
       </button>

@@ -48,6 +48,7 @@ const NoteState = (props) =>{
     }
 
     const fetchNotes=async ()=>{
+      // A top loading bar could easily be used here, this is just like the api call of the newsMonkey application, but the only difference is that we have created our own api here.
       let url = `${host}/api/notes/fetchnotes`;
       const response = await fetch(url, {
         method: 'GET',
@@ -64,10 +65,6 @@ const NoteState = (props) =>{
 
 
     const editNote=async(id,obj)=>{
-      // console.log(id);
-      // if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
-      //   return;
-      // }
       let url = `${host}/api/notes/updatenote/${id}`;      
       await fetch(url, {
         method: 'PUT',
@@ -75,13 +72,9 @@ const NoteState = (props) =>{
           'Content-Type': 'application/json',
           'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
         },
-        body: JSON.stringify(obj)
+        body: JSON.stringify(obj) //This body is to be sent, this is why this field had to be included, this is the payload, in the fetchNotes method there is no payload to be added, this is why in that function we do not need to add payoload.
       });
-      // let jsonResponse = await response.json();
-      // console.log(jsonResponse);
-      // const newNotes = notes.filter((note)=>{return note._id!==id});    //The filter function will check for the condition and if the condition matches then it will be added to the newNotes array, this will be useful just like map method where we could get the actual array returned
-      // setNotes(notes);
-      fetchNotes();
+      fetchNotes();   //After the document being updated, we were not able to display it without the page refresh, but when we call this method it will only update the changes, so we got what we wanted.
     }
 
     return (
