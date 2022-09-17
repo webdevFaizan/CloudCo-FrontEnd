@@ -7,7 +7,7 @@ export default function Notes(props) {
     <>
         <div style={{display : 'flex', flexWrap : "wrap", justifyContent : 'space-around', border : "0px solid red"}}>
             {                
-                props.notes.map((note)=>{return <NotesItem key={note._id} note={note}/>})
+                props.notes.map((note)=>{return <NotesItem key={note._id} updateOnClick={props.updateOnClick} note={note}/>})
             }
         </div>
     </>

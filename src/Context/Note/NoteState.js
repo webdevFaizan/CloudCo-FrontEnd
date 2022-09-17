@@ -30,6 +30,9 @@ const NoteState = (props) =>{
 
     const deleteNote=async(id)=>{
       // console.log(id);
+      if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
+        return;
+      }
       let url = `${host}/api/notes/deletenote/${id}`;      
       const response = await fetch(url, {
         method: 'DELETE',
@@ -58,9 +61,32 @@ const NoteState = (props) =>{
       setNotes(jsonResponse);
     }
 
+
+
+    const editNote=async(id,obj)=>{
+      // console.log(id);
+      // if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
+      //   return;
+      // }
+      let url = `${host}/api/notes/updatenote/${id}`;      
+      await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjMyMzdjMDg3YTdjNmI0ZGNmNGM1ODgzIiwiaWF0IjoxNjYzMjY5ODk2fQ.d1M5fCrGVqorV6ePpqL3DkOz5ot7KKt3QeXeE3kBp8U'
+        },
+        body: JSON.stringify(obj)
+      });
+      // let jsonResponse = await response.json();
+      // console.log(jsonResponse);
+      // const newNotes = notes.filter((note)=>{return note._id!==id});    //The filter function will check for the condition and if the condition matches then it will be added to the newNotes array, this will be useful just like map method where we could get the actual array returned
+      // setNotes(notes);
+      fetchNotes();
+    }
+
     return (
         // <NoteContext.Provider value={{state : state, updateState: updateState}}>{/* We can even use the ES6 command here basically passing only {state, updateState} */}
-        <NoteContext.Provider value={{notes, clearNotesList, addNote, deleteNote, fetchNotes}}>
+        <NoteContext.Provider value={{notes, clearNotesList, addNote, deleteNote, fetchNotes, editNote}}>
             {props.children}
         </NoteContext.Provider>
     )

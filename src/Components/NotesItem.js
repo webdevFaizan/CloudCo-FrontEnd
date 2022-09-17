@@ -7,6 +7,7 @@ export default function NotesItem(props) {
     const {deleteNote} = context;
 
     let {title,description} = props.note;
+    let {updateOnClick}=props;
 
     const deleteFunction = ()=>{
         let id=props.note._id;
@@ -23,7 +24,7 @@ export default function NotesItem(props) {
             </div>
             <div className="delete-icon my-3" style = {{alignItems: 'right', cursor: 'pointer'}} >
                 <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160119.png" className='mx-3' width ="30px" alt="..." />
+                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160119.png" onClick={()=>{updateOnClick(props.note)}}className='mx-3' width ="30px" alt="..." />
                     <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" onClick={deleteFunction} className='mx-3' width ="30px" alt="..." />
                 </div>
             </div>
