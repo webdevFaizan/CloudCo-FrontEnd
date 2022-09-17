@@ -2,7 +2,7 @@ import React,{useState, useContext} from 'react'
 import {useNavigate} from 'react-router-dom';
 import AlertContext from '../Context/Alert/AlertContext';
 
-function Login() {
+function Login(props) {
 
     const context = useContext(AlertContext);
     const {alertChange} = context;
@@ -45,6 +45,7 @@ function Login() {
             localStorage.setItem('auth_token', data.auth_token)
             console.log("auth token in local storage is");
             console.log(localStorage.getItem('auth_token'));
+            props.tokenChange(localStorage.getItem('auth_token'));
             navigate('/');      //This navigate functionality is taken from useNavigate, it will take your react based application to different pages, this is useful in the case of login is complete, or if the login has failed, or if the user is trying to signin but the email id does not exist and he needs to sign up.
             alertChange({
                 message : "Logged In",

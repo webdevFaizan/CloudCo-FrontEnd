@@ -2,7 +2,7 @@ import React,{useState, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import AlertContext from '../Context/Alert/AlertContext'
 
-function Signup(){
+function Signup(props){
     let navigate = useNavigate();
     let context = useContext(AlertContext);
     let {alertChange} =context;
@@ -62,6 +62,7 @@ function Signup(){
             localStorage.setItem('auth_token', data.auth_token)
             console.log("auth token in local storage is");
             console.log(localStorage.getItem('auth_token'));
+            props.tokenChange(localStorage.getItem('auth_token'));
             navigate('/'); 
             alertChange({
                 message : "Sign Up Successful, Logged In",

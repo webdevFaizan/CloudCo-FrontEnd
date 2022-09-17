@@ -2,7 +2,9 @@ import React, {useEffect} from 'react'
 
 import {Link,useLocation} from 'react-router-dom'
 
-const Navbar = () => {
+
+const Navbar = (props) => {
+  
   const location = useLocation();
   useEffect(()=>{
     // console.log(location.pathname);
@@ -28,16 +30,30 @@ const Navbar = () => {
         <div className="credentials d-flex">
             <div className="collapse navbar-collapse " >
               <ul className="navbar-nav mr-auto">
-                <li className={`nav-item`}>
-                  <button className="btn btn-sm btn-primary mx-1" style={{color:'#000'}}>
-                    <Link className="nav-link active" to="/login">Login <span className="sr-only">(current)</span></Link>
-                  </button>
-                </li>
-                <li className={`nav-item`}>              
-                  <button className="btn btn-sm btn-primary mx-1">
-                      <Link className="nav-link active" to="/signup">Signup <span className="sr-only">(current)</span></Link>                
-                  </button>
-                </li>
+                {
+                  !props.token?
+                      (<li className={`nav-item`}>
+                        <button className="btn btn-sm btn-primary mx-1" style={{color:'#000'}}>
+                          <Link className="nav-link active" to="/login">Login <span className="sr-only">(current)</span></Link>
+                        </button>
+                      </li>):''
+                }
+                { 
+                  !props.token?    
+                      (<li className={`nav-item`}>              
+                        <button className="btn btn-sm btn-primary mx-1">
+                            <Link className="nav-link active" to="/signup">Signup <span className="sr-only">(current)</span></Link>                
+                        </button>
+                      </li>):''
+                }
+                {
+                  props.token?(
+                      <li className={`nav-item`}>              
+                        <button className="btn btn-sm btn-primary mx-1">
+                            <Link className="nav-link active" to="/logout">Logout <span className="sr-only">(current)</span></Link>                
+                        </button>
+                      </li>):''
+                }
               </ul>
             </div>
         </div>

@@ -13,6 +13,7 @@ const Home = () => {
   const ref = useRef(null);
   useEffect(() => {
     fetchNotes();
+    localStorage.removeItem('auth_token');
     // eslint-disable-next-line
   }, []);
 

@@ -7,7 +7,7 @@ const NoteState = (props) =>{
     const initialNotes = [];
 
     const [notes, setNotes] = useState(initialNotes);
-    const [flag, setFlag] =useState(false)
+    const [flag, setFlag] =useState(true)
     function clearNotesList(){
         if(flag===false){          
           // setNotes(notes);
