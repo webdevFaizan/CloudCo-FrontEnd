@@ -53,7 +53,12 @@ function Login() {
             });
         }
         else{
-            window.alert("Invalid credentials")
+            // window.alert("Invalid credentials");
+            alertChange({
+                message : "Invalid Credentials",
+                type : "danger",
+                id : ''
+            });
         }
     }
 

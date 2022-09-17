@@ -7,6 +7,9 @@ const Alert = (props) => {
   const {alert} =context;
 
   const capitalise = (word) =>{
+      if(word==="danger"){
+        word = "Error"
+      }
       const temp = word.toLowerCase();
       return temp.charAt(0).toUpperCase() + temp.slice(1);
   }  

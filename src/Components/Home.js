@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useRef,useState } from 'react'
 import Notes from './Notes';
 import Addnote from './Addnote';
 import NoteContext from '../Context/Note/NoteContext';
-
+import AlertContext from '../Context/Alert/AlertContext';
 
 
 const Home = () => {
   const context = useContext(NoteContext);
+  const alertContext = useContext(AlertContext);
+  const {alertChange }= alertContext;
   const { notes, flag, clearNotesList, editNote, fetchNotes } = context;
   const ref = useRef(null);
   useEffect(() => {
@@ -46,6 +48,11 @@ const Home = () => {
     document.getElementById('edit-formTag').value="";
     document.getElementById('closeButton').click();
     editNote(id,obj);       //This is the global context api variable and it will be called using this parameter. This is also where the global id state is being used up.
+    alertChange({
+      message : "Note Changed successfully.",
+      type : "success",
+      id : ''
+    });
   }
     // ******************************
 
@@ -109,7 +116,7 @@ const Home = () => {
       </div>
 
       {
-        notes.length && (
+        notes.length>0?(
           <div className="notes container">
             <h1>Your Saved Notes <button className='btn btn-danger' onClick={clearNotesList}>Show/Hide Notes</button></h1>
             {
@@ -117,7 +124,7 @@ const Home = () => {
             }
 
           </div>
-        )
+        ):""
       }
       {
         !notes.length && <strong>Please add some new notes.</strong>
