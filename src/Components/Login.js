@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
+import {useNavigate} from 'react-router-dom';
 
 function Login() {
+    let navigate = useNavigate();       //useHistory was replaced by useNavigate in react router dom package, this will be used to take your page from page to another.
 
     const host='http://localhost:5000'
 
@@ -17,8 +19,9 @@ function Login() {
         // console.log(description);
     }
 
-    const onSubmit=async (e)=>{
+    const onSubmit=async (e)=>{        
         e.preventDefault();
+        
         let obj={
             email:email,
             password: password
@@ -36,8 +39,17 @@ function Login() {
     });
 
         const data =await response.json();
-        console.log(data);
-
+        // console.log(data);
+        if(data.success===true){
+            // localStorage.auth_token = data.auth_token;
+            localStorage.setItem('auth_token', data.auth_token)
+            console.log("auth token in local storage is");
+            console.log(localStorage.getItem('auth_token'));
+            navigate('/');      //This navigate functionality is taken from useNavigate, it will take your react based application to different pages, this is useful in the case of login is complete, or if the login has failed, or if the user is trying to signin but the email id does not exist and he needs to sign up.
+        }
+        else{
+            window.alert("Invalid credentials")
+        }
     }
 
     return (
