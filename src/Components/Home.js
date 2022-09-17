@@ -9,7 +9,7 @@ import NoteContext from '../Context/Note/NoteContext';
 
 const Home = () => {
   const context = useContext(NoteContext);
-  const { notes, clearNotesList, editNote, fetchNotes } = context;
+  const { notes, flag, clearNotesList, editNote, fetchNotes } = context;
   const ref = useRef(null);
   useEffect(() => {
     fetchNotes();
@@ -69,7 +69,7 @@ const Home = () => {
       {/* <!-- Button trigger modal --> */}
       {/* This button has been hidden, its functionality is required, but it should not be shown since, we are using this as ref object, when ever we click on any update icon in each note, then the updateOnClick method is being run and thus it will be able to track if this button is being clicked or not. */}
       <button style={{display : 'none'}}ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
+        Modal is hidden.
       </button>
 
       {/* <!-- Modal --> */}
@@ -85,6 +85,7 @@ const Home = () => {
               <form>
                 <div className="form-group">
                   <label htmlFor="edit-formTitle">Title</label>
+                  {/* All the ids of this form has been changed, the main add note component had id as formTitle this form has a title of edit-formTitle, this is to ensure we are targetting the correct element for our changes, also the id must be unique in general.*/}
                   <input type="text" className="form-control" name="edit-title" id="edit-formTitle" onChange={onTitleChange} aria-describedby="emailHelp" placeholder="Enter Title" />
                   {/* onChange is the method that can be used to track the change in this field, it always sends in an event object, this event object is being received in the method and we use it to track the changes. This is exactly how we are able to create a state variable out of 'title' which on change will keep on updating the states. */}
                 </div>
@@ -102,6 +103,7 @@ const Home = () => {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" style ={{display : 'none'}}id='closeButton' data-bs-dismiss="modal">Close</button>
+              {/* IMPORTANT : Right now this button of close is being clicked by selecting this element in the fireOnSubmit method and this is being clicked usign the click method, but this could have been done with the help of useRef. Here this close button is going to have a ref which will track the click functionality of this button and inside the fireOnSubmit we will attach this refhook, if you want a better view of this functionality simply watch video 67. */}
               <button type="button" className="btn btn-primary" onClick={fireOnSubmit}>Update Note</button>
             </div>
           </div>
@@ -111,9 +113,9 @@ const Home = () => {
       {
         notes.length && (
           <div className="notes container">
-            <h1>Your Saved Notes <button className='btn btn-danger' onClick={clearNotesList}>Clear Notes</button></h1>
+            <h1>Your Saved Notes <button className='btn btn-danger' onClick={clearNotesList}>Show/Hide Notes</button></h1>
             {
-              notes.length && <Notes notes={notes} updateOnClick={updateOnClick} />
+              flag && notes.length && <Notes notes={notes} updateOnClick={updateOnClick} />
             }
 
           </div>

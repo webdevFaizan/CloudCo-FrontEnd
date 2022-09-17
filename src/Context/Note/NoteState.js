@@ -7,8 +7,16 @@ const NoteState = (props) =>{
     const initialNotes = [];
 
     const [notes, setNotes] = useState(initialNotes);
+    const [flag, setFlag] =useState(false)
     function clearNotesList(){
-        setNotes({});
+        if(flag===false){          
+          // setNotes(notes);
+          setFlag(true)
+        }
+        else if(flag===true){          
+          // setNotes(notes);
+          setFlag(false);
+        }
     }
 
     const addNote=async (obj)=>{
@@ -30,6 +38,7 @@ const NoteState = (props) =>{
 
     const deleteNote=async(id)=>{
       // console.log(id);
+      // Here if we write, only confirm(message) this is not going to work, so we have to add the window.confirm.
       if(!window.confirm("Are you sure you want to delete this note, you will not be able to retrieve it.")){
         return;
       }
@@ -74,12 +83,14 @@ const NoteState = (props) =>{
         },
         body: JSON.stringify(obj) //This body is to be sent, this is why this field had to be included, this is the payload, in the fetchNotes method there is no payload to be added, this is why in that function we do not need to add payoload.
       });
+      // IMPORTANT : After updating the document, calling the fetch notes is the best and optimised approach, since fetchnote is will only track the changes in notes, just like git only stores the changes from the previous commit. Harry added a manual loop to track the changes which was inefficient. There is one problem with my appraoch tough, we are hitting the data base twice, first while updating and then while fetching notes. I have addded the harry notes in our docs file, to better understand the approach, harry is only hitting the db once and the changes are being tracked in the front end only.
       fetchNotes();   //After the document being updated, we were not able to display it without the page refresh, but when we call this method it will only update the changes, so we got what we wanted.
+      
     }
 
     return (
         // <NoteContext.Provider value={{state : state, updateState: updateState}}>{/* We can even use the ES6 command here basically passing only {state, updateState} */}
-        <NoteContext.Provider value={{notes, clearNotesList, addNote, deleteNote, fetchNotes, editNote}}>
+        <NoteContext.Provider value={{notes, flag, clearNotesList, addNote, deleteNote, fetchNotes, editNote}}>
             {props.children}
         </NoteContext.Provider>
     )
